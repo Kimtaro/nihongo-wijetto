@@ -198,7 +198,7 @@ function Widget() {
                                     1.464
                                 }
                             >
-                                {result.japanese.0.reading}
+                                {result.japanese[0].reading}
                             </Text>
                             <Text
                                 name="魚"
@@ -241,7 +241,7 @@ function Widget() {
                                         1.464
                                     }
                                 >
-                                    {result.slug}
+                                    {result.senses[0].parts_of_speech}
                                 </Text>
                                 <Text
                                     name={result.senses[0].english_definitions[0]}
