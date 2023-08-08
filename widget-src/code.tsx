@@ -7,7 +7,7 @@ function Widget() {
     const onTextEnd = async (event) => {
         setText(event.characters);
         console.log('started --> NEW ->  ' + event.characters);
-        const url = 'https://corsproxy.io/?' + encodeURIComponent('https://jisho.org/api/v1/search/words?keyword=' + encodeURIComponent(event.characters.toLowerCase()))
+        const url = 'https://corsproxy.io/?' + encodeURIComponent('https://jisho.org/api/v1/search/words?exact=true&keyword=' + encodeURIComponent(event.characters.toLowerCase()))
         const response = await fetch(url)
         const json = await response.json()
         setResults(json.data)
@@ -160,7 +160,8 @@ function Widget() {
                     direction="vertical"
                     spacing={16}
                 >
-                    {results.map((result, index) => {
+
+                    {results ? results.map((result, index) => {
                         return <AutoLayout
                         name="search-bar"
                         fill="#F5F5F5"
@@ -187,7 +188,6 @@ function Widget() {
                             horizontalAlignItems="center"
                         >
                             <Text
-                                name={result.japanese[0].reading}
                                 fill="#F24E1E"
                                 verticalAlignText="center"
                                 horizontalAlignText="center"
@@ -203,7 +203,6 @@ function Widget() {
                                 {result.japanese[0].reading}
                             </Text>
                             <Text
-                                name={result.slug}
                                 fill="#000"
                                 verticalAlignText="center"
                                 horizontalAlignText="center"
@@ -233,7 +232,6 @@ function Widget() {
                                 verticalAlignItems="center"
                             >
                                 <Text
-                                    name={result.senses[0].parts_of_speech}
                                     fill="#909090"
                                     verticalAlignText="center"
                                     horizontalAlignText="center"
@@ -243,10 +241,10 @@ function Widget() {
                                         1.464
                                     }
                                 >
-                                    {result.senses[0].parts_of_speech}
+                                    {result.senses[0].parts_of_speech.join('; ')}
                                 </Text>
                                 <Text
-                                    name={result.senses[0].english_definitions[0]}
+
                                     fill="#0006"
                                     verticalAlignText="center"
                                     horizontalAlignText="center"
@@ -258,7 +256,7 @@ function Widget() {
                                         3.039
                                     }
                                 >
-                                    {result.senses[0].english_definitions[0]}
+                                    {result.senses[0].english_definitions.join('; ')}
                                 </Text>
                             </AutoLayout>
                         </AutoLayout>
@@ -281,7 +279,7 @@ function Widget() {
                             height={95}
                         />
                     </AutoLayout>
-                    })}
+                    }) : ''}
                 </AutoLayout>
             </AutoLayout>
             <Rectangle
