@@ -7,7 +7,7 @@ function Widget() {
     const onTextEnd = async (event) => {
         setText(event.characters);
         console.log('started --> NEW ->  ' + event.characters);
-        const url = 'https://corsproxy.io/?' + encodeURIComponent('https://jisho.org/api/v1/search/words?keyword=' + event.characters)
+        const url = 'https://corsproxy.io/?' + encodeURIComponent('https://jisho.org/api/v1/search/words?keyword=' + encodeURIComponent(event.characters.toLowerCase()))
         const response = await fetch(url)
         const json = await response.json()
         setResults(json.data)
@@ -33,6 +33,7 @@ function Widget() {
             strokeWidth={1.464}
             width={582.839}
             height={391}
+
         >
             <Rectangle
                 name="Rectangle 1"
@@ -60,7 +61,7 @@ function Widget() {
                     fill="#FFF"
                     verticalAlignText="center"
                     horizontalAlignText="center"
-                    fontFamily="Whyte Inktrap"
+                    fontFamily="Roboto"
                     fontSize={
                         35.14606857299805
                     }
@@ -155,19 +156,20 @@ function Widget() {
             >
                 <AutoLayout
                     name="Frame 4"
-                    overflow="visible"
+                    overflow="scroll"
                     direction="vertical"
                     spacing={16}
                 >
-                    {results.map(result => {
+                    {results.map((result, index) => {
                         return <AutoLayout
                         name="search-bar"
                         fill="#F5F5F5"
+                        key={index}
                         cornerRadius={8}
                         strokeWidth={
                             1.464
                         }
-                        overflow="visible"
+                        overflow="scroll"
                         spacing={32}
                         padding={{
                             vertical: 16,
@@ -205,7 +207,7 @@ function Widget() {
                                 fill="#000"
                                 verticalAlignText="center"
                                 horizontalAlignText="center"
-                                fontFamily="Whyte Inktrap"
+                                fontFamily="Roboto"
                                 fontSize={32}
                                 strokeWidth={
                                     3.039
@@ -248,7 +250,7 @@ function Widget() {
                                     fill="#0006"
                                     verticalAlignText="center"
                                     horizontalAlignText="center"
-                                    fontFamily="Whyte"
+                                    fontFamily="Roboto"
                                     fontSize={
                                         24
                                     }
@@ -290,31 +292,31 @@ function Widget() {
                 width={512}
                 height={35}
             />
-            <Frame
-                name="scrollbar"
-                x={555}
-                y={169}
-                overflow="visible"
-                width={13}
-                height={187}
-            >
-                <Rectangle
-                    name="Rectangle 3"
-                    fill="#F5F5F5"
-                    cornerRadius={50}
-                    width={13}
-                    height={187}
-                />
-            </Frame>
-            <Rectangle
-                name="Rectangle 4"
-                x={555}
-                y={169}
-                fill="#000"
-                cornerRadius={50}
-                width={13}
-                height={50}
-            />
+            {/*<Frame*/}
+            {/*    name="scrollbar"*/}
+            {/*    x={555}*/}
+            {/*    y={169}*/}
+            {/*    overflow="visible"*/}
+            {/*    width={13}*/}
+            {/*    height={187}*/}
+            {/*>*/}
+            {/*    <Rectangle*/}
+            {/*        name="Rectangle 3"*/}
+            {/*        fill="#F5F5F5"*/}
+            {/*        cornerRadius={50}*/}
+            {/*        width={13}*/}
+            {/*        height={187}*/}
+            {/*    />*/}
+            {/*</Frame>*/}
+            {/*<Rectangle*/}
+            {/*    name="Rectangle 4"*/}
+            {/*    x={555}*/}
+            {/*    y={169}*/}
+            {/*    fill="#000"*/}
+            {/*    cornerRadius={50}*/}
+            {/*    width={13}*/}
+            {/*    height={50}*/}
+            {/*/>*/}
         </Frame>
     );
 }
