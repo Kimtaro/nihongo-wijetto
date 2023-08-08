@@ -187,7 +187,7 @@ function Widget() {
                             horizontalAlignItems="center"
                         >
                             <Text
-                                name="さかな"
+                                name={result.japanese[0].reading}
                                 fill="#F24E1E"
                                 verticalAlignText="center"
                                 horizontalAlignText="center"
@@ -203,7 +203,7 @@ function Widget() {
                                 {result.japanese[0].reading}
                             </Text>
                             <Text
-                                name="魚"
+                                name={result.slug}
                                 fill="#000"
                                 verticalAlignText="center"
                                 horizontalAlignText="center"
@@ -233,7 +233,7 @@ function Widget() {
                                 verticalAlignItems="center"
                             >
                                 <Text
-                                    name="noun"
+                                    name={result.senses[0].parts_of_speech}
                                     fill="#909090"
                                     verticalAlignText="center"
                                     horizontalAlignText="center"
