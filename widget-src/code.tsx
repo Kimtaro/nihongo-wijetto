@@ -15,6 +15,10 @@ function Widget() {
         setResults(json.data)
         console.log(results)
     };
+    const onXClick = () => {
+        setText('')
+        setResults([])
+    }
     const onResultClick = async (e, nodeInfo: nwi.Daum) => {
         console.log(e)
         console.log(nodeInfo)
@@ -358,6 +362,7 @@ function Widget() {
                     overflow="visible"
                     width={32}
                     height={32}
+                    onClick={onXClick}
                 >
                     <SVG
                         name="Union"
