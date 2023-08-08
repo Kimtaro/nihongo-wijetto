@@ -241,6 +241,7 @@ function Widget() {
                 </Frame>
             </AutoLayout>
         )
+        node.visible=true
     }
     return (
         <Frame
@@ -407,8 +408,8 @@ function Widget() {
                             }}
                             width={512}
                             horizontalAlignItems="center"
-                            onClick={(e) => {
-                                onResultClick(e, result)
+                            onClick={async (e) => {
+                                await onResultClick(e, result)
                             }}
                         >
                             <AutoLayout
