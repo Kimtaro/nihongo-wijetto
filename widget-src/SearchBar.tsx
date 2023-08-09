@@ -1,14 +1,19 @@
 const {widget} = figma;
 const {AutoLayout, Ellipse, Frame, SVG, Text, Input, useSyncedState} = widget;
 
-export default function SearchBar(setResults) {
+type SearchBarProps = {
+    setResults: (value: any[]) => void
+}
+export default function SearchBar({setResults}: SearchBarProps) {
     const [text, setText] = useSyncedState("text", "");
-    const onTextEnd = async (event) => {
+    const onTextEnd = async (event: TextEditEvent) => {
         setText(event.characters);
         console.log('started --> NEW ->  ' + event.characters);
         const url = 'https://corsproxy.io/?' + encodeURIComponent('https://jisho.org/api/v1/search/words?exact=true&keyword=' + encodeURIComponent(event.characters.toLowerCase()))
         const response = await fetch(url)
         const json = await response.json()
+        console.log(json.data)
+        console.log(typeof setResults)
         setResults(json.data)
     };
     const onXClick = () => {
@@ -18,15 +23,13 @@ export default function SearchBar(setResults) {
 
     return <AutoLayout
         name="search-bar"
-        x={17.573}
-        y={95.187}
         fill="#FFF"
-        stroke="#0000004D"
-        cornerRadius={16}
+        stroke="#D9D9D9"
+        cornerRadius={8}
         overflow="visible"
         spacing="auto"
         padding={16}
-        width={550.622}
+        width="fill-parent"
         verticalAlignItems="center"
     >
         <AutoLayout

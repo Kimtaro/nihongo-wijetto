@@ -1,20 +1,23 @@
 import * as nwi from "./nwInterfaces";
+import Result from "./Result";
+
 const {widget} = figma;
 const {AutoLayout, Rectangle, Text, useSyncedState} = widget;
 
+type ResultsListProps = {
+    results: nwi.Daum[]
+}
 
-export default function ResultsList() {
+export default function ResultsList({results}: ResultsListProps) {
 
     return <AutoLayout
-        name="scrolling result"
-        x={18}
-        y={148}
+        name="ScrollingResult"
         direction="vertical"
         padding={{
             vertical: 24,
             horizontal: 0,
         }}
-        height={208}
+        width={550.62}
         horizontalAlignItems="center"
     >
         <AutoLayout
@@ -23,8 +26,9 @@ export default function ResultsList() {
             direction="vertical"
             spacing={16}
         >
-
-
+            {results.map((result, index) => {
+                return <Result resultInfo={result} index={index}/>
+            })}
         </AutoLayout>
     </AutoLayout>
 }

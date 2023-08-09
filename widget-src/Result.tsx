@@ -4,23 +4,18 @@ import VocabCard from "./VocabCard";
 const {widget} = figma;
 const {AutoLayout, Rectangle, Text} = widget;
 
-export default function Result(resultInfo: nwi.Daum, index: number) {
-    const onResultClick = async (e, nodeInfo: nwi.Daum) => {
+export default function Result({resultInfo, index}: { resultInfo: nwi.Daum, index: number }) {
+    const onResultClick = async (e: WidgetClickEvent, nodeInfo: nwi.Daum) => {
         const node = await figma.createNodeFromJSXAsync(
-         <VocabCard slug={resultInfo.slug} is_common={resultInfo.is_common} tags={resultInfo.tags}
-                          jlpt={resultInfo.jlpt} japanese={resultInfo.japanese} senses={resultInfo.senses}
-                          attribution={resultInfo.attribution}/>
-    )
+            <VocabCard nodeInfo={resultInfo}/>
+        )
     }
     return <AutoLayout
-        name="search-bar"
+        name="SearchBar"
         fill="#F5F5F5"
-        key={index}
         cornerRadius={8}
-        strokeWidth={
-            1.464
-        }
-        overflow="scroll"
+        strokeWidth={1.464}
+        overflow="visible"
         spacing={32}
         padding={{
             vertical: 16,
@@ -29,8 +24,9 @@ export default function Result(resultInfo: nwi.Daum, index: number) {
         width={512}
         horizontalAlignItems="center"
         onClick={async (e) => {
-            await onResultClick(e, result)
+            await onResultClick(e, resultInfo)
         }}
+        key={index}
     >
         <AutoLayout
             name="kanji-box"
