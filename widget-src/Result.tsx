@@ -1,30 +1,11 @@
 import * as nwi from "./nwInterfaces";
 import VocabCard from "./VocabCard";
-
+import * as util from "./Utils"
 const {widget} = figma;
 const {AutoLayout, Rectangle, Text} = widget;
 
 export default function Result({resultInfo, index}: { resultInfo: nwi.Daum, index: number }) {
-    const shouldShowReading = (entry: nwi.Daum): Boolean => {
-        return reading(entry) !== word(entry)
-    }
-    const reading = (entry: nwi.Daum): string => {
-        return entry.japanese[0].reading
-    }
-    const word = (entry: nwi.Daum): string => {
-        const usuallyKana = entry.senses.find((sense) => {
-            return sense.tags && sense.tags.find((tag) => {
-                if (tag === 'Usually written using kana alone') {
-                    return true
-                }
-            })
-        })
-        if (!usuallyKana && entry.japanese[0].word) {
-            return entry.japanese[0].word
-        } else {
-            return entry.japanese[0].reading
-        }
-    }
+
     const onResultClick = async (e: WidgetClickEvent, nodeInfo: nwi.Daum) => {
         const node = await figma.createNodeFromJSXAsync(
             <VocabCard nodeInfo={resultInfo}/>
@@ -55,7 +36,7 @@ export default function Result({resultInfo, index}: { resultInfo: nwi.Daum, inde
             verticalAlignItems="center"
             horizontalAlignItems="center"
         >
-            {shouldShowReading(resultInfo) &&
+            {util.shouldShowReading(resultInfo) &&
             <Text
                 fill="#F24E1E"
                 verticalAlignText="center"
@@ -69,7 +50,7 @@ export default function Result({resultInfo, index}: { resultInfo: nwi.Daum, inde
                     1.464
                 }
             >
-                {reading(resultInfo)}
+                {util.reading(resultInfo)}
             </Text>
             }
             <Text
@@ -82,7 +63,7 @@ export default function Result({resultInfo, index}: { resultInfo: nwi.Daum, inde
                     3.039
                 }
             >
-                {word(resultInfo)}
+                {util.word(resultInfo)}
             </Text>
         </AutoLayout>
 

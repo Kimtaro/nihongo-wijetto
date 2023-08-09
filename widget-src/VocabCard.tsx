@@ -1,5 +1,5 @@
 import * as nwi from "./nwInterfaces";
-
+import * as util from "./Utils"
 const {widget} = figma;
 const {AutoLayout, Rectangle, Text, Frame, Image} = widget;
 
@@ -7,26 +7,6 @@ type VocabCardProps = {
     nodeInfo: nwi.Daum
 }
 export default function VocabCard({nodeInfo}: VocabCardProps) {
-    const shouldShowReading = (entry: nwi.Daum): Boolean => {
-        return reading(entry) !== word(entry)
-    }
-    const reading = (entry: nwi.Daum): string => {
-        return entry.japanese[0].reading
-    }
-    const word = (entry: nwi.Daum): string => {
-        const usuallyKana = entry.senses.find((sense) => {
-            return sense.tags && sense.tags.find((tag) => {
-                if (tag === 'Usually written using kana alone') {
-                    return true
-                }
-            })
-        })
-        if (!usuallyKana && entry.japanese[0].word) {
-            return entry.japanese[0].word
-        } else {
-            return entry.japanese[0].reading
-        }
-    }
     return <AutoLayout
         name="VocabularyCard"
         effect={{
@@ -45,7 +25,7 @@ export default function VocabCard({nodeInfo}: VocabCardProps) {
         direction="vertical"
         spacing={10}
         width={387}
-        height={350}
+        height={700}
         horizontalAlignItems="center"
     >
         <AutoLayout
@@ -97,7 +77,7 @@ export default function VocabCard({nodeInfo}: VocabCardProps) {
                         4.559
                     }
                 >
-                    {word(nodeInfo)}
+                    {util.word(nodeInfo)}
                 </Text>
             </AutoLayout>
         </AutoLayout>
@@ -144,7 +124,7 @@ export default function VocabCard({nodeInfo}: VocabCardProps) {
             }}
             width="fill-parent"
         >
-            { shouldShowReading(nodeInfo) &&
+            { util.shouldShowReading(nodeInfo) &&
             <AutoLayout
                 name="definition-box"
                 overflow="visible"
@@ -177,7 +157,7 @@ export default function VocabCard({nodeInfo}: VocabCardProps) {
                         3.039
                     }
                 >
-                    {reading(nodeInfo)}
+                    {util.reading(nodeInfo)}
                 </Text>
             </AutoLayout>
             }
