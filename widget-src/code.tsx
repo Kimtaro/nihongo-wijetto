@@ -270,7 +270,7 @@ function Widget() {
 
         >
             <Rectangle
-                name="Rectangle 1"
+                name="widget-bg"
                 fill="#FFF"
                 cornerRadius={
                     23.43071174621582
@@ -320,14 +320,14 @@ function Widget() {
                 verticalAlignItems="center"
             >
                 <AutoLayout
-                    name="Frame 1"
+                    name="search-bar-contents"
                     strokeWidth={1.464}
                     overflow="visible"
                     spacing={8}
                     verticalAlignItems="center"
                 >
                     <Frame
-                        name="40 / Toolbar / search"
+                        name="search-icon"
                         strokeWidth={
                             0.805
                         }
@@ -355,6 +355,7 @@ function Widget() {
                         onTextEditEnd={onTextEnd}
                         placeholder="Your annotation here..."
                         value={text}
+                        width={446}
                     />
                 </AutoLayout>
                 <Frame
