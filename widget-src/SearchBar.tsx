@@ -16,7 +16,7 @@ export default function SearchBar({setResults, setNumberOfResults, setPage, setI
     const onTextEnd = async (event: TextEditEvent) => {
         setText(event.characters);
         console.log('started --> NEW ->  ' + event.characters);
-        const url = 'https://corsproxy.io/?' + encodeURIComponent('https://jisho.org/api/v1/search/words?exact=true&keyword=' + encodeURIComponent(event.characters.toLowerCase()))
+        const url = 'https://corsproxy.io/?' + encodeURIComponent('https://jisho.org/api/v1/search/words?api_key=nihongowijetto&exact=true&keyword=' + encodeURIComponent(event.characters.toLowerCase()))
         const response = await fetch(url)
         const json = await response.json()
         setResults(json.data)
