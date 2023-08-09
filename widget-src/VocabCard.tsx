@@ -1,5 +1,5 @@
 import * as nwi from "./nwInterfaces";
-
+import * as util from "./Utils"
 const {widget} = figma;
 const {AutoLayout, Rectangle, Text, Frame, Image} = widget;
 
@@ -25,7 +25,7 @@ export default function VocabCard({nodeInfo}: VocabCardProps) {
         direction="vertical"
         spacing={10}
         width={387}
-        height={350}
+        height={700}
         horizontalAlignItems="center"
     >
         <AutoLayout
@@ -77,7 +77,7 @@ export default function VocabCard({nodeInfo}: VocabCardProps) {
                         4.559
                     }
                 >
-                    {nodeInfo.slug}
+                    {util.word(nodeInfo)}
                 </Text>
             </AutoLayout>
         </AutoLayout>
@@ -124,6 +124,7 @@ export default function VocabCard({nodeInfo}: VocabCardProps) {
             }}
             width="fill-parent"
         >
+            { util.shouldShowReading(nodeInfo) &&
             <AutoLayout
                 name="definition-box"
                 overflow="visible"
@@ -156,9 +157,10 @@ export default function VocabCard({nodeInfo}: VocabCardProps) {
                         3.039
                     }
                 >
-                    {nodeInfo.japanese[0].reading}
+                    {util.reading(nodeInfo)}
                 </Text>
             </AutoLayout>
+            }
             {nodeInfo.senses.map((sense) => {
                 return <AutoLayout
                     name="definition-box"

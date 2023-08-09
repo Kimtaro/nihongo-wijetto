@@ -1,10 +1,11 @@
 import * as nwi from "./nwInterfaces";
 import VocabCard from "./VocabCard";
-
+import * as util from "./Utils"
 const {widget} = figma;
 const {AutoLayout, Rectangle, Text} = widget;
 
 export default function Result({resultInfo, index}: { resultInfo: nwi.Daum, index: number }) {
+
     const onResultClick = async (e: WidgetClickEvent, nodeInfo: nwi.Daum) => {
         const node = await figma.createNodeFromJSXAsync(
             <VocabCard nodeInfo={resultInfo}/>
@@ -35,6 +36,7 @@ export default function Result({resultInfo, index}: { resultInfo: nwi.Daum, inde
             verticalAlignItems="center"
             horizontalAlignItems="center"
         >
+            {util.shouldShowReading(resultInfo) &&
             <Text
                 fill="#F24E1E"
                 verticalAlignText="center"
@@ -48,8 +50,9 @@ export default function Result({resultInfo, index}: { resultInfo: nwi.Daum, inde
                     1.464
                 }
             >
-                {resultInfo.japanese[0].reading}
+                {util.reading(resultInfo)}
             </Text>
+            }
             <Text
                 fill="#000"
                 verticalAlignText="center"
@@ -60,7 +63,7 @@ export default function Result({resultInfo, index}: { resultInfo: nwi.Daum, inde
                     3.039
                 }
             >
-                {resultInfo.slug}
+                {util.word(resultInfo)}
             </Text>
         </AutoLayout>
 
