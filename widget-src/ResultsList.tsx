@@ -1,9 +1,10 @@
 import * as nwi from "./nwInterfaces";
 const {widget} = figma;
-const {AutoLayout, Rectangle, Text} = widget;
+const {AutoLayout, Rectangle, Text, useSyncedState} = widget;
 
 
 export default function ResultsList() {
+
     return <AutoLayout
         name="scrolling result"
         x={18}

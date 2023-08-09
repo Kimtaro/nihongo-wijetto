@@ -20,200 +20,10 @@
     });
   };
 
-  // widget-src/code.tsx
+  // widget-src/Card.tsx
   var { widget } = figma;
-  var { AutoLayout, Ellipse, Frame, Image, Rectangle, SVG, Text, Input, useSyncedState } = widget;
-  function Widget() {
-    const [text, setText] = useSyncedState("text", "");
-    const [results, setResults] = useSyncedState("results", []);
-    const onTextEnd = (event) => __async(this, null, function* () {
-      setText(event.characters);
-      console.log("started --> NEW ->  " + event.characters);
-      const url = "https://corsproxy.io/?" + encodeURIComponent("https://jisho.org/api/v1/search/words?exact=true&keyword=" + encodeURIComponent(event.characters.toLowerCase()));
-      const response = yield fetch(url);
-      const json = yield response.json();
-      setResults(json.data);
-      console.log(results);
-    });
-    const onXClick = () => {
-      setText("");
-      setResults([]);
-    };
-    const onResultClick = (e, nodeInfo) => __async(this, null, function* () {
-      console.log(e);
-      console.log(nodeInfo);
-      const node = yield figma.createNodeFromJSXAsync(/* @__PURE__ */ figma.widget.h(AutoLayout, {
-        name: "VocabularyCard",
-        effect: {
-          type: "drop-shadow",
-          color: "#0000001A",
-          offset: {
-            x: 0,
-            y: 4
-          },
-          blur: 24,
-          showShadowBehindNode: false
-        },
-        fill: "#FFF",
-        cornerRadius: 16,
-        direction: "vertical",
-        verticalAlignItems: "center",
-        horizontalAlignItems: "center"
-      }, /* @__PURE__ */ figma.widget.h(Frame, {
-        name: "Kanji-box",
-        effect: {
-          type: "inner-shadow",
-          color: "#0000001A",
-          offset: {
-            x: 0,
-            y: 0
-          },
-          blur: 24,
-          visible: false
-        },
-        fill: "#FFF",
-        width: 387,
-        height: 125
-      }, /* @__PURE__ */ figma.widget.h(AutoLayout, {
-        name: "kanji-box",
-        x: {
-          type: "center",
-          offset: 0.5
-        },
-        y: {
-          type: "center",
-          offset: 22.5
-        },
-        strokeWidth: 1.5,
-        overflow: "visible",
-        direction: "vertical",
-        height: 114,
-        verticalAlignItems: "center",
-        horizontalAlignItems: "center"
-      }, /* @__PURE__ */ figma.widget.h(Text, {
-        name: "\u9B5A",
-        opacity: 0.8,
-        fill: "#000",
-        width: 96,
-        verticalAlignText: "center",
-        horizontalAlignText: "center",
-        lineHeight: "100%",
-        fontFamily: "Noto Serif Tamil",
-        fontSize: 96,
-        fontWeight: 900,
-        strokeWidth: 4.559
-      }, nodeInfo.slug)), /* @__PURE__ */ figma.widget.h(Frame, {
-        name: "Frame 9",
-        y: 125,
-        width: 387,
-        height: 35
-      })), /* @__PURE__ */ figma.widget.h(AutoLayout, {
-        name: "levels",
-        overflow: "visible",
-        width: 315,
-        horizontalAlignItems: "center",
-        verticalAlignItems: "center"
-      }), /* @__PURE__ */ figma.widget.h(AutoLayout, {
-        name: "Frame 10",
-        fill: "#5551FF",
-        cornerRadius: 50,
-        overflow: "visible",
-        spacing: 8,
-        padding: {
-          vertical: 8,
-          horizontal: 16
-        },
-        verticalAlignItems: "center"
-      }, /* @__PURE__ */ figma.widget.h(Image, {
-        name: "Search",
-        blendMode: "color-dodge",
-        strokeWidth: 1.464,
-        width: 23.431,
-        height: 23.431,
-        src: "<Add image URL here>"
-      }), /* @__PURE__ */ figma.widget.h(Text, {
-        name: "Find sentences",
-        fill: "#FFF",
-        verticalAlignText: "center",
-        fontFamily: "Inter",
-        fontWeight: 300
-      }, "Find sentences")), /* @__PURE__ */ figma.widget.h(AutoLayout, {
-        name: "Definitions",
-        overflow: "visible",
-        direction: "vertical",
-        spacing: 16,
-        padding: 32,
-        width: 387
-      }, /* @__PURE__ */ figma.widget.h(AutoLayout, {
-        name: "definition-box",
-        overflow: "visible",
-        direction: "vertical",
-        width: "fill-parent",
-        verticalAlignItems: "center"
-      }, /* @__PURE__ */ figma.widget.h(Text, {
-        name: "Reading",
-        fill: "#699BF7",
-        width: "fill-parent",
-        verticalAlignText: "center",
-        fontFamily: "Inter",
-        fontSize: 8,
-        fontWeight: 300,
-        strokeWidth: 1.464
-      }, "Reading"), /* @__PURE__ */ figma.widget.h(Text, {
-        name: "\u3055\u304B\u306A",
-        fill: "#F24E1E",
-        width: "fill-parent",
-        verticalAlignText: "center",
-        fontFamily: "Inter",
-        fontWeight: 700,
-        strokeWidth: 3.039
-      }, nodeInfo.japanese[0].reading)), /* @__PURE__ */ figma.widget.h(AutoLayout, {
-        name: "definition-box",
-        overflow: "visible",
-        direction: "vertical",
-        width: "fill-parent",
-        verticalAlignItems: "center"
-      }, /* @__PURE__ */ figma.widget.h(Text, {
-        name: "Godan verb with ru ending, Transitive verb",
-        fill: "#699BF7",
-        width: "fill-parent",
-        verticalAlignText: "center",
-        fontFamily: "Inter",
-        fontSize: 8,
-        fontWeight: 300,
-        strokeWidth: 1.464
-      }, nodeInfo.senses[0].parts_of_speech.join("; ")), /* @__PURE__ */ figma.widget.h(Text, {
-        name: "to fish",
-        fill: "#000",
-        width: "fill-parent",
-        verticalAlignText: "center",
-        fontFamily: "Inter",
-        fontWeight: 500,
-        strokeWidth: 3.039
-      }, nodeInfo.senses[0].english_definitions[0]))), /* @__PURE__ */ figma.widget.h(Frame, {
-        name: "Frame 11",
-        fill: "#5551FF",
-        overflow: "visible",
-        width: 386,
-        height: 42
-      }, /* @__PURE__ */ figma.widget.h(Text, {
-        name: "JLPT N5 // WaniKani Lvl 7",
-        x: {
-          type: "left-right",
-          leftOffset: 0.5,
-          rightOffset: -0.5
-        },
-        y: -0.431,
-        fill: "#FFF",
-        width: 386,
-        height: 42,
-        verticalAlignText: "center",
-        horizontalAlignText: "center",
-        fontFamily: "Inter",
-        fontWeight: 300
-      }, nodeInfo.jlpt.join("; ")))));
-      node.visible = true;
-    });
+  var { Frame, Rectangle, AutoLayout, Text } = widget;
+  function Card({ children }) {
     return /* @__PURE__ */ figma.widget.h(Frame, {
       name: "Card",
       effect: {
@@ -256,7 +66,34 @@
       fontSize: 35.14606857299805,
       fontWeight: 700,
       strokeWidth: 1.464
-    }, "\u65E5\u672C\u8A9E \u30A6\u30A3\u30B8\u30A7\u30C3\u30C8")), /* @__PURE__ */ figma.widget.h(AutoLayout, {
+    }, "\u65E5\u672C\u8A9E \u30A6\u30A3\u30B8\u30A7\u30C3\u30C8")), children, /* @__PURE__ */ figma.widget.h(Rectangle, {
+      name: "Rectangle 2",
+      x: 18,
+      y: 356,
+      fill: "#FFF",
+      width: 512,
+      height: 35
+    }));
+  }
+
+  // widget-src/SearchBar.tsx
+  var { widget: widget2 } = figma;
+  var { AutoLayout: AutoLayout2, Ellipse, Frame: Frame2, SVG, Text: Text2, Input, useSyncedState } = widget2;
+  function SearchBar(setResults) {
+    const [text, setText] = useSyncedState("text", "");
+    const onTextEnd = (event) => __async(this, null, function* () {
+      setText(event.characters);
+      console.log("started --> NEW ->  " + event.characters);
+      const url = "https://corsproxy.io/?" + encodeURIComponent("https://jisho.org/api/v1/search/words?exact=true&keyword=" + encodeURIComponent(event.characters.toLowerCase()));
+      const response = yield fetch(url);
+      const json = yield response.json();
+      setResults(json.data);
+    });
+    const onXClick = () => {
+      setText("");
+      setResults([]);
+    };
+    return /* @__PURE__ */ figma.widget.h(AutoLayout2, {
       name: "search-bar",
       x: 17.573,
       y: 95.187,
@@ -268,13 +105,13 @@
       padding: 16,
       width: 550.622,
       verticalAlignItems: "center"
-    }, /* @__PURE__ */ figma.widget.h(AutoLayout, {
+    }, /* @__PURE__ */ figma.widget.h(AutoLayout2, {
       name: "search-bar-contents",
       strokeWidth: 1.464,
       overflow: "visible",
       spacing: 8,
       verticalAlignItems: "center"
-    }, /* @__PURE__ */ figma.widget.h(Frame, {
+    }, /* @__PURE__ */ figma.widget.h(Frame2, {
       name: "search-icon",
       strokeWidth: 0.805,
       width: 32,
@@ -296,7 +133,7 @@
       placeholder: "Your annotation here...",
       value: text,
       width: 446
-    })), /* @__PURE__ */ figma.widget.h(Frame, {
+    })), /* @__PURE__ */ figma.widget.h(Frame2, {
       name: "32 / x",
       overflow: "visible",
       width: 32,
@@ -309,116 +146,17 @@
       height: 11,
       width: 11,
       src: "<svg width='12' height='12' viewBox='0 0 12 12' fill='none' xmlns='http://www.w3.org/2000/svg'>\n<path fill-rule='evenodd' clip-rule='evenodd' d='M6.19478 5.48033L10.8412 0.833862L11.5484 1.54097L6.90189 6.18743L11.5484 10.8339L10.8412 11.541L6.19478 6.89454L1.54835 11.541L0.841248 10.8339L5.48767 6.18744L0.841249 1.54105L1.54835 0.833938L6.19478 5.48033Z' fill='black' fill-opacity='0.8'/>\n</svg>\n"
-    }))), /* @__PURE__ */ figma.widget.h(AutoLayout, {
-      name: "scrolling result",
-      x: 18,
-      y: 148,
-      direction: "vertical",
-      padding: {
-        vertical: 24,
-        horizontal: 0
-      },
-      height: 208,
-      horizontalAlignItems: "center"
-    }, /* @__PURE__ */ figma.widget.h(AutoLayout, {
-      name: "Frame 4",
-      overflow: "scroll",
-      direction: "vertical",
-      spacing: 16
-    }, results.map((result, index) => {
-      return /* @__PURE__ */ figma.widget.h(AutoLayout, {
-        name: "search-bar",
-        fill: "#F5F5F5",
-        key: index,
-        cornerRadius: 8,
-        strokeWidth: 1.464,
-        overflow: "scroll",
-        spacing: 32,
-        padding: {
-          vertical: 16,
-          horizontal: 40
-        },
-        width: 512,
-        horizontalAlignItems: "center",
-        onClick: (e) => __async(this, null, function* () {
-          yield onResultClick(e, result);
-        })
-      }, /* @__PURE__ */ figma.widget.h(AutoLayout, {
-        name: "kanji-box",
-        overflow: "visible",
-        direction: "vertical",
-        spacing: 8,
-        verticalAlignItems: "center",
-        horizontalAlignItems: "center"
-      }, /* @__PURE__ */ figma.widget.h(Text, {
-        fill: "#F24E1E",
-        verticalAlignText: "center",
-        horizontalAlignText: "center",
-        fontFamily: "Zen Kaku Gothic Antique",
-        fontSize: 12,
-        fontWeight: 500,
-        strokeWidth: 1.464
-      }, result.japanese[0].reading), /* @__PURE__ */ figma.widget.h(Text, {
-        fill: "#000",
-        verticalAlignText: "center",
-        horizontalAlignText: "center",
-        fontFamily: "Roboto",
-        fontSize: 32,
-        strokeWidth: 3.039
-      }, result.slug)), /* @__PURE__ */ figma.widget.h(AutoLayout, {
-        name: "Frame 7",
-        overflow: "visible",
-        direction: "vertical",
-        spacing: 8,
-        width: "fill-parent",
-        height: "fill-parent",
-        verticalAlignItems: "center"
-      }, /* @__PURE__ */ figma.widget.h(AutoLayout, {
-        name: "definition-box",
-        overflow: "visible",
-        direction: "vertical",
-        width: "fill-parent",
-        verticalAlignItems: "center"
-      }, /* @__PURE__ */ figma.widget.h(Text, {
-        fill: "#909090",
-        verticalAlignText: "center",
-        horizontalAlignText: "center",
-        fontFamily: "Inter",
-        fontSize: 8,
-        strokeWidth: 1.464
-      }, result.senses[0].parts_of_speech.join("; ")), /* @__PURE__ */ figma.widget.h(Text, {
-        fill: "#0006",
-        verticalAlignText: "center",
-        horizontalAlignText: "center",
-        fontFamily: "Roboto",
-        fontSize: 24,
-        strokeWidth: 3.039
-      }, result.senses[0].english_definitions.join("; ")))), /* @__PURE__ */ figma.widget.h(Rectangle, {
-        name: "common-word-signal",
-        y: {
-          type: "top-bottom",
-          topOffset: 0,
-          bottomOffset: 0
-        },
-        positioning: "absolute",
-        fill: "#0FA958",
-        cornerRadius: {
-          topLeft: 8,
-          topRight: 0,
-          bottomRight: 0,
-          bottomLeft: 8
-        },
-        width: 7,
-        height: 95
-      }));
-    }))), /* @__PURE__ */ figma.widget.h(Rectangle, {
-      name: "Rectangle 2",
-      x: 18,
-      y: 356,
-      fill: "#FFF",
-      width: 512,
-      height: 35
+    })));
+  }
+
+  // widget-src/code.tsx
+  var { widget: widget3 } = figma;
+  var { AutoLayout: AutoLayout3, Ellipse: Ellipse2, Frame: Frame3, Image, Rectangle: Rectangle2, SVG: SVG2, Text: Text3, Input: Input2, useSyncedState: useSyncedState2 } = widget3;
+  function Widget() {
+    const [results, setResults] = useSyncedState2("results", []);
+    return /* @__PURE__ */ figma.widget.h(Card, null, /* @__PURE__ */ figma.widget.h(SearchBar, {
+      setResults
     }));
   }
-  widget.register(Widget);
+  widget3.register(Widget);
 })();
