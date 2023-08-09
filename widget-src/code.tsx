@@ -28,7 +28,6 @@ function Widget() {
     const word = (entry: nwi.Daum): string => {
         const usuallyKana = entry.senses.find((sense) => {
             return sense.tags && sense.tags.find((tag) => {
-                console.log(tag)
                 if (tag === 'Usually written using kana alone') {
                     return true
                 }
