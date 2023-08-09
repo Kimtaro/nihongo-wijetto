@@ -1,30 +1,8 @@
-import * as nwi from './nwInterfaces'
-import Card from "./Card";
-
+import * as nwi from "./nwInterfaces";
 const {widget} = figma;
-const {AutoLayout, Ellipse, Frame, Image, Rectangle, SVG, Text, Input, useSyncedState,} = widget;
-
-function Widget() {
-    const [text, setText] = useSyncedState("text", "");
-    const [results, setResults] = useSyncedState("results", []);
-    const onTextEnd = async (event) => {
-        setText(event.characters);
-        console.log('started --> NEW ->  ' + event.characters);
-        const url = 'https://corsproxy.io/?' + encodeURIComponent('https://jisho.org/api/v1/search/words?exact=true&keyword=' + encodeURIComponent(event.characters.toLowerCase()))
-        const response = await fetch(url)
-        const json = await response.json()
-        setResults(json.data)
-        console.log(results)
-    };
-    const onXClick = () => {
-        setText('')
-        setResults([])
-    }
-    const onResultClick = async (e, nodeInfo: nwi.Daum) => {
-        console.log(e)
-        console.log(nodeInfo)
-        const node = await figma.createNodeFromJSXAsync(
-            <AutoLayout
+const {AutoLayout, Rectangle, Text, Frame, Image} = widget;
+export default function VocabCard(nodeInfo: nwi.Daum) {
+    return <AutoLayout
                 name="VocabularyCard"
                 effect={{
                     type: "drop-shadow",
@@ -245,14 +223,4 @@ function Widget() {
                     </Text>
                 </Frame>
             </AutoLayout>
-        )
-        node.visible=true
-    }
-    return (
-        <Card>
-
-        </Card>
-    );
 }
-
-widget.register(Widget);
