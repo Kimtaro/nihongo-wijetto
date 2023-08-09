@@ -19,6 +19,28 @@ function Widget() {
         setText('')
         setResults([])
     }
+    const shouldShowReading = (entry: nwi.Daum): Boolean => {
+        return reading(entry) !== word(entry)
+    }
+    const reading = (entry: nwi.Daum): string => {
+        return entry.japanese[0].reading
+    }
+    const word = (entry: nwi.Daum): string => {
+        const usuallyKana = entry.senses.find((sense) => {
+            return sense.tags && sense.tags.find((tag) => {
+                console.log(tag)
+                if (tag === 'Usually written using kana alone') {
+                    return true
+                }
+            })
+        })
+        if (!usuallyKana && entry.japanese[0].word) {
+            return entry.japanese[0].word
+        }
+        else {
+            return entry.japanese[0].reading
+        }
+    }
     const onResultClick = async (e, nodeInfo: nwi.Daum) => {
         console.log(e)
         console.log(nodeInfo)
@@ -90,7 +112,7 @@ function Widget() {
                                 4.559
                             }
                         >
-                            {nodeInfo.slug}
+                            {word(nodeInfo)}
                         </Text>
                     </AutoLayout>
                     <Frame
@@ -145,6 +167,7 @@ function Widget() {
                     padding={32}
                     width={387}
                 >
+                    { shouldShowReading(nodeInfo) &&
                     <AutoLayout
                         name="definition-box"
                         overflow="visible"
@@ -177,9 +200,10 @@ function Widget() {
                                 3.039
                             }
                         >
-                            {nodeInfo.japanese[0].reading}
+                            {reading(nodeInfo)}
                         </Text>
                     </AutoLayout>
+                }
                     <AutoLayout
                         name="definition-box"
                         overflow="visible"
@@ -426,6 +450,7 @@ function Widget() {
                                 verticalAlignItems="center"
                                 horizontalAlignItems="center"
                             >
+                                { shouldShowReading(result) &&
                                 <Text
                                     fill="#F24E1E"
                                     verticalAlignText="center"
@@ -439,8 +464,9 @@ function Widget() {
                                         1.464
                                     }
                                 >
-                                    {result.japanese[0].reading}
+                                    {reading(result)}
                                 </Text>
+                            }
                                 <Text
                                     fill="#000"
                                     verticalAlignText="center"
@@ -451,7 +477,7 @@ function Widget() {
                                         3.039
                                     }
                                 >
-                                    {result.slug}
+                                    {word(result)}
                                 </Text>
                             </AutoLayout>
                             <AutoLayout
