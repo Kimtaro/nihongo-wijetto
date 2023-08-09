@@ -3,8 +3,15 @@ const {AutoLayout, Ellipse, Frame, SVG, Text, Input, useSyncedState} = widget;
 
 type SearchBarProps = {
     setResults: (value: any[]) => void
+    setNumberOfResults: (value: number) => void
+    setPage: (value: number) => void
+    setIndexFloor: (value: number) => void
+    setIndexCeiling: (value: number) => void
+    resultsPerPage: number
+    setMaxPage: (value: number) => void
+    maxPage: number
 }
-export default function SearchBar({setResults}: SearchBarProps) {
+export default function SearchBar({setResults, setNumberOfResults, setPage, setIndexCeiling, setIndexFloor, resultsPerPage, maxPage, setMaxPage}: SearchBarProps) {
     const [text, setText] = useSyncedState("text", "");
     const onTextEnd = async (event: TextEditEvent) => {
         setText(event.characters);
@@ -12,9 +19,13 @@ export default function SearchBar({setResults}: SearchBarProps) {
         const url = 'https://corsproxy.io/?' + encodeURIComponent('https://jisho.org/api/v1/search/words?exact=true&keyword=' + encodeURIComponent(event.characters.toLowerCase()))
         const response = await fetch(url)
         const json = await response.json()
-        console.log(json.data)
-        console.log(typeof setResults)
         setResults(json.data)
+        setPage(1)
+        const numberOfResults: number = json.data.length
+        setNumberOfResults(numberOfResults)
+        setIndexFloor(0)
+        setIndexCeiling(resultsPerPage)
+        setMaxPage(Math.ceil(numberOfResults/resultsPerPage))
     };
     const onXClick = () => {
         setText('')
