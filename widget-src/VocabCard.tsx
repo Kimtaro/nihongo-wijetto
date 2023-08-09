@@ -159,40 +159,43 @@ export default function VocabCard({nodeInfo}: VocabCardProps) {
                     {nodeInfo.japanese[0].reading}
                 </Text>
             </AutoLayout>
-            <AutoLayout
-                name="definition-box"
-                overflow="visible"
-                direction="vertical"
-                width="fill-parent"
-                verticalAlignItems="center"
-            >
-                <Text
-                    name="Godan verb with ru ending, Transitive verb"
-                    fill="#699BF7"
+            {nodeInfo.senses.map((sense) => {
+                return <AutoLayout
+                    name="definition-box"
+                    overflow="visible"
+                    direction="vertical"
                     width="fill-parent"
-                    verticalAlignText="center"
-                    fontFamily="Inter"
-                    fontSize={8}
-                    fontWeight={300}
-                    strokeWidth={
-                        1.464
-                    }
+                    verticalAlignItems="center"
                 >
-                    {nodeInfo.senses[0].parts_of_speech.join('; ')}
-                </Text>
-                <Text
-                    fill="#000"
-                    width="fill-parent"
-                    verticalAlignText="center"
-                    fontFamily="Inter"
-                    fontWeight={500}
-                    strokeWidth={
-                        3.039
-                    }
-                >
-                    {nodeInfo.senses[0].english_definitions[0]}
-                </Text>
-            </AutoLayout>
+                    <Text
+                        name="Godan verb with ru ending, Transitive verb"
+                        fill="#699BF7"
+                        width="fill-parent"
+                        verticalAlignText="center"
+                        fontFamily="Inter"
+                        fontSize={8}
+                        fontWeight={300}
+                        strokeWidth={
+                            1.464
+                        }
+                    >
+                        {sense.parts_of_speech.join('; ')}
+                    </Text>
+                    <Text
+                        fill="#000"
+                        width="fill-parent"
+                        verticalAlignText="center"
+                        fontFamily="Inter"
+                        fontWeight={500}
+                        strokeWidth={
+                            3.039
+                        }
+                    >
+                        {sense.english_definitions.join('; ')}
+                    </Text>
+                </AutoLayout>
+            })}
+
 
         </AutoLayout>
         <Frame
