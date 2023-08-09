@@ -13,6 +13,7 @@ export default function Result({resultInfo, index}: { resultInfo: nwi.Daum, inde
     return <AutoLayout
         name="SearchBar"
         fill="#F5F5F5"
+        width="fill-parent"
         cornerRadius={8}
         strokeWidth={1.464}
         overflow="visible"
@@ -21,8 +22,6 @@ export default function Result({resultInfo, index}: { resultInfo: nwi.Daum, inde
             vertical: 16,
             horizontal: 40,
         }}
-        width={512}
-        horizontalAlignItems="center"
         onClick={async (e) => {
             await onResultClick(e, resultInfo)
         }}
@@ -64,51 +63,39 @@ export default function Result({resultInfo, index}: { resultInfo: nwi.Daum, inde
                 {resultInfo.slug}
             </Text>
         </AutoLayout>
+
         <AutoLayout
-            name="Frame 7"
+            name="definition-box"
             overflow="visible"
             direction="vertical"
-            spacing={8}
             width="fill-parent"
-            height="fill-parent"
             verticalAlignItems="center"
         >
-            <AutoLayout
-                name="definition-box"
-                overflow="visible"
-                direction="vertical"
-                width="fill-parent"
-                verticalAlignItems="center"
+            <Text
+                fill="#909090"
+                verticalAlignText="center"
+                horizontalAlignText="center"
+                fontFamily="Inter"
+                fontSize={8}
+                strokeWidth={
+                    1.464
+                }
             >
-                <Text
-                    fill="#909090"
-                    verticalAlignText="center"
-                    horizontalAlignText="center"
-                    fontFamily="Inter"
-                    fontSize={8}
-                    strokeWidth={
-                        1.464
-                    }
-                >
-                    {resultInfo.senses[0].parts_of_speech.join('; ')}
-                </Text>
-                <Text
-
-                    fill="#0006"
-                    verticalAlignText="center"
-                    horizontalAlignText="center"
-                    fontFamily="Roboto"
-                    fontSize={
-                        24
-                    }
-                    strokeWidth={
-                        3.039
-                    }
-                >
-                    {resultInfo.senses[0].english_definitions.join('; ')}
-                </Text>
-            </AutoLayout>
+                {resultInfo.senses[0].parts_of_speech.join('; ')}
+            </Text>
+            <Text
+                fill="#0006"
+                width="fill-parent"
+                verticalAlignText="center"
+                fontFamily="Inter"
+                fontSize={24}
+                fontWeight={500}
+                strokeWidth={3.039}
+            >
+                {resultInfo.senses[0].english_definitions.join('; ')}
+            </Text>
         </AutoLayout>
+
         <Rectangle
             name="common-word-signal"
             y={{

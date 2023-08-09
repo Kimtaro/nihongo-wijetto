@@ -15,15 +15,16 @@ export default function ResultsList({results}: ResultsListProps) {
         direction="vertical"
         padding={{
             vertical: 24,
-            horizontal: 0,
+            horizontal: 24,
         }}
-        width={550.62}
+        width="fill-parent"
         horizontalAlignItems="center"
     >
         <AutoLayout
             name="Frame 4"
             overflow="scroll"
             direction="vertical"
+            width="fill-parent"
             spacing={16}
         >
             {results.map((result, index) => {
