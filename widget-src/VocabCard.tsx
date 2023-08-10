@@ -2,12 +2,12 @@ import * as nwi from "./nwInterfaces";
 import * as util from "./Utils"
 
 const {widget} = figma;
-const {AutoLayout, Rectangle, Text, Frame, Image, SVG, useSyncedState} = widget;
+const {AutoLayout, Text, Frame, Image, SVG, useSyncedState} = widget;
 
 type VocabCardProps = {
     nodeInfo: nwi.Daum
 }
-export default function VocabCard({nodeInfo}: VocabCardProps) {
+export default function VocabCard({nodeInfo}: VocabCardProps): FigmaDeclarativeNode  {
     const [sentences, setSentences] = useSyncedState<nwi.Sentence[]>("sentences", [])
     const [showSentences, setShowSentences] = useSyncedState<boolean>("showDefinitions", false)
     const onVocabButtonClick = async () => {

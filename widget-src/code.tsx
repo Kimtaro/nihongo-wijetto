@@ -7,13 +7,15 @@ const {useSyncedState,} = widget;
 
 function Widget() {
     const [widgetType, _] = useSyncedState<string>("widgetType", 'card');
-    const [resultInfo, setResultInfo] = useSyncedState<nwi.Daum | {}>('resultInfo', {});
-
+    const [resultInfo, setResultInfo] = useSyncedState<nwi.Daum | null>('resultInfo', null);
 
     switch (widgetType) {
         case 'card':
             return <NihongoWidget/>
         case 'vocab card':
+            if (!resultInfo) {
+                return null
+            }
             return <VocabCard nodeInfo={resultInfo}/>
     }
 }

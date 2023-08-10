@@ -1,8 +1,11 @@
 const {widget} = figma;
 const {AutoLayout, Text} = widget;
 
+type CardProps = {
+    children: FigmaDeclarativeChildren<any>
+}
 
-export default function Card({children}) {
+export default function Card({children}: CardProps): FigmaDeclarativeNode {
     return <AutoLayout
         name="Card"
         effect={{
