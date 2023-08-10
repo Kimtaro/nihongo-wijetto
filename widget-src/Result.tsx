@@ -5,12 +5,14 @@ const {widget} = figma;
 const {AutoLayout, Rectangle, Text} = widget;
 
 export default function Result({resultInfo, index}: { resultInfo: nwi.Daum, index: number }) {
-
     const onResultClick = async (e: WidgetClickEvent, nodeInfo: nwi.Daum) => {
         const node = await figma.createNodeFromJSXAsync(
             <VocabCard nodeInfo={resultInfo}/>
         )
     }
+
+    const isLongWord = util.word(resultInfo).length > 4
+
     return <AutoLayout
         name="SearchBar"
         fill="#F5F5F5"
@@ -18,10 +20,11 @@ export default function Result({resultInfo, index}: { resultInfo: nwi.Daum, inde
         cornerRadius={8}
         strokeWidth={1.464}
         overflow="visible"
-        spacing={32}
+        direction={isLongWord ? "vertical" : "horizontal"}
+        spacing={10}
         padding={{
             vertical: 16,
-            horizontal: 40,
+            horizontal: 20,
         }}
         onClick={async (e) => {
             await onResultClick(e, resultInfo)
@@ -32,15 +35,17 @@ export default function Result({resultInfo, index}: { resultInfo: nwi.Daum, inde
             name="kanji-box"
             overflow="visible"
             direction="vertical"
-            spacing={8}
+            spacing={4}
+            minWidth={130}
             verticalAlignItems="center"
             horizontalAlignItems="center"
         >
             {util.shouldShowReading(resultInfo) &&
             <Text
                 fill="#F24E1E"
+                width="fill-parent"
                 verticalAlignText="center"
-                horizontalAlignText="center"
+                horizontalAlignText="left"
                 fontFamily="Zen Kaku Gothic Antique"
                 fontSize={12}
                 fontWeight={
@@ -55,8 +60,9 @@ export default function Result({resultInfo, index}: { resultInfo: nwi.Daum, inde
             }
             <Text
                 fill="#000"
+                width="fill-parent"
                 verticalAlignText="center"
-                horizontalAlignText="center"
+                horizontalAlignText="left"
                 fontFamily="Roboto"
                 fontSize={32}
                 strokeWidth={
@@ -70,33 +76,50 @@ export default function Result({resultInfo, index}: { resultInfo: nwi.Daum, inde
         <AutoLayout
             name="definition-box"
             overflow="visible"
-            direction="vertical"
+            direction="horizontal"
             width="fill-parent"
             verticalAlignItems="center"
+            spacing={10}
         >
-            <Text
-                fill="#909090"
-                verticalAlignText="center"
-                horizontalAlignText="center"
-                fontFamily="Inter"
-                fontSize={8}
-                strokeWidth={
-                    1.464
-                }
-            >
-                {resultInfo.senses[0].parts_of_speech.join('; ')}
-            </Text>
-            <Text
-                fill="#0006"
+            {isLongWord &&
+                <AutoLayout
+                    name="fake-kanji-box"
+                    width={130}
+                    height={10}
+                >
+                </AutoLayout>
+            }
+            <AutoLayout
+                name="definition-box"
+                overflow="visible"
+                direction="vertical"
                 width="fill-parent"
-                verticalAlignText="center"
-                fontFamily="Inter"
-                fontSize={24}
-                fontWeight={500}
-                strokeWidth={3.039}
+                verticalAlignItems="center"
             >
-                {resultInfo.senses[0].english_definitions.join('; ')}
-            </Text>
+                <Text
+                    fill="#909090"
+                    verticalAlignText="center"
+                    horizontalAlignText="center"
+                    fontFamily="Inter"
+                    fontSize={8}
+                    strokeWidth={
+                        1.464
+                    }
+                >
+                    {resultInfo.senses[0].parts_of_speech.join('; ')}
+                </Text>
+                <Text
+                    fill="#0006"
+                    width="fill-parent"
+                    verticalAlignText="center"
+                    fontFamily="Inter"
+                    fontSize={24}
+                    fontWeight={500}
+                    strokeWidth={3.039}
+                >
+                    {resultInfo.senses[0].english_definitions.join('; ')}
+                </Text>
+            </AutoLayout>
         </AutoLayout>
 
         <Rectangle
