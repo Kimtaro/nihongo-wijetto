@@ -5,7 +5,12 @@ import * as util from "./Utils"
 const {widget, widgetId} = figma;
 const {AutoLayout, Rectangle, Text, useWidgetId} = widget;
 
-export default function Result({resultInfo, index}: { resultInfo: nwi.Daum, index: number }) {
+function isWidgetNode(node: BaseNode): node is WidgetNode {
+    return node.type === 'WIDGET'
+}
+
+
+export default function Result({resultInfo, index}: { resultInfo: nwi.Daum, index: number }): FigmaDeclarativeNode {
     const widgetId = useWidgetId()
     const onResultClick = async (e: WidgetClickEvent, nodeInfo: nwi.Daum) => {
         // const node = await figma.createNodeFromJSXAsync(
@@ -13,8 +18,9 @@ export default function Result({resultInfo, index}: { resultInfo: nwi.Daum, inde
         // )
         console.log('Result ----- >', nodeInfo)
 
-        const widgetNode: WidgetNode | null = figma.getNodeById(widgetId);
-        if (!widgetNode) {
+        // const widgetNode = figma.getNodeById(widgetId) as WidgetNode | null
+        const widgetNode = figma.getNodeById(widgetId)
+        if (!widgetNode || !isWidgetNode(widgetNode)) {
             return // this should never happen
         }
         const node = widgetNode.cloneWidget({widgetType: 'vocab card', resultInfo: nodeInfo})
@@ -49,7 +55,6 @@ return <AutoLayout
         overflow="visible"
         direction="vertical"
         spacing={4}
-        minWidth={130}
         verticalAlignItems="center"
         horizontalAlignItems="center"
     >
