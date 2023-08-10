@@ -22,10 +22,10 @@ export default function VocabCard({nodeInfo}: VocabCardProps) {
         }}
         fill="#FFF"
         cornerRadius={16}
+        overflow="visible"
         direction="vertical"
         spacing={10}
         width={387}
-        height={700}
         horizontalAlignItems="center"
     >
         <AutoLayout
@@ -58,7 +58,7 @@ export default function VocabCard({nodeInfo}: VocabCardProps) {
                 overflow="visible"
                 direction="vertical"
                 width="fill-parent"
-                height={114}
+                height="fill-parent"
                 verticalAlignItems="center"
                 horizontalAlignItems="center"
             >
@@ -216,8 +216,8 @@ export default function VocabCard({nodeInfo}: VocabCardProps) {
                 }}
                 y={-0.431}
                 fill="#FFF"
-                width={387}
-                height={42}
+                width="fill-parent"
+                height="fill-parent"
                 verticalAlignText="center"
                 horizontalAlignText="center"
                 fontFamily="Inter"
