@@ -1,5 +1,6 @@
 import * as nwi from "./nwInterfaces";
 import * as util from "./Utils"
+
 const {widget} = figma;
 const {AutoLayout, Rectangle, Text, Frame, Image} = widget;
 
@@ -38,7 +39,7 @@ export default function VocabCard({nodeInfo}: VocabCardProps) {
                     y: 0,
                 },
                 blur: 24,
-                visible: false,
+                visible:false
             }}
             fill="#FFF"
             direction="vertical"
@@ -49,8 +50,14 @@ export default function VocabCard({nodeInfo}: VocabCardProps) {
                 left: 0,
             }}
             width="fill-parent"
-            height="fill-parent"
+            height={105}
             horizontalAlignItems="center"
+            cornerRadius={{
+                topLeft: 16,
+                topRight: 16,
+                bottomRight: 0,
+                bottomLeft: 0,
+            }}
         >
             <AutoLayout
                 name="kanji-box"
@@ -124,42 +131,42 @@ export default function VocabCard({nodeInfo}: VocabCardProps) {
             }}
             width="fill-parent"
         >
-            { util.shouldShowReading(nodeInfo) &&
-            <AutoLayout
-                name="definition-box"
-                overflow="visible"
-                direction="vertical"
-                width="fill-parent"
-                verticalAlignItems="center"
-            >
-                <Text
-                    name="Reading"
-                    fill="#699BF7"
+            {util.shouldShowReading(nodeInfo) &&
+                <AutoLayout
+                    name="definition-box"
+                    overflow="visible"
+                    direction="vertical"
                     width="fill-parent"
-                    verticalAlignText="center"
-                    fontFamily="Inter"
-                    fontSize={8}
-                    fontWeight={300}
-                    strokeWidth={
-                        1.464
-                    }
+                    verticalAlignItems="center"
                 >
-                    Reading
-                </Text>
-                <Text
-                    name="さかな"
-                    fill="#F24E1E"
-                    width="fill-parent"
-                    verticalAlignText="center"
-                    fontFamily="Inter"
-                    fontWeight={700}
-                    strokeWidth={
-                        3.039
-                    }
-                >
-                    {util.reading(nodeInfo)}
-                </Text>
-            </AutoLayout>
+                    <Text
+                        name="Reading"
+                        fill="#699BF7"
+                        width="fill-parent"
+                        verticalAlignText="center"
+                        fontFamily="Inter"
+                        fontSize={8}
+                        fontWeight={300}
+                        strokeWidth={
+                            1.464
+                        }
+                    >
+                        Reading
+                    </Text>
+                    <Text
+                        name="さかな"
+                        fill="#F24E1E"
+                        width="fill-parent"
+                        verticalAlignText="center"
+                        fontFamily="Inter"
+                        fontWeight={700}
+                        strokeWidth={
+                            3.039
+                        }
+                    >
+                        {util.reading(nodeInfo)}
+                    </Text>
+                </AutoLayout>
             }
             {nodeInfo.senses.map((sense) => {
                 return <AutoLayout
@@ -206,6 +213,12 @@ export default function VocabCard({nodeInfo}: VocabCardProps) {
             overflow="visible"
             width='fill-parent'
             height={42}
+            cornerRadius={{
+                topLeft: 0,
+                topRight: 0,
+                bottomRight: 16,
+                bottomLeft: 16,
+            }}
         >
             <Text
                 name="JLPT N5 // WaniKani Lvl 7"
@@ -214,16 +227,16 @@ export default function VocabCard({nodeInfo}: VocabCardProps) {
                     leftOffset: 0.5,
                     rightOffset: -0.5,
                 }}
-                y={-0.431}
                 fill="#FFF"
                 width="fill-parent"
-                height="fill-parent"
+                height={42}
                 verticalAlignText="center"
                 horizontalAlignText="center"
                 fontFamily="Inter"
-                fontWeight={300}
+                fontWeight={500}
+                fontSize={24}
             >
-                {nodeInfo.jlpt.join('; ')}
+                {nodeInfo.jlpt.join('; ').toUpperCase()}
             </Text>
         </Frame>
     </AutoLayout>
