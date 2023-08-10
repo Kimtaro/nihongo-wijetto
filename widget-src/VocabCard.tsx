@@ -78,7 +78,7 @@ export default function VocabCard({nodeInfo}: VocabCardProps) {
                     horizontalAlignText="center"
                     lineHeight="100%"
                     fontFamily="Noto Serif Tamil"
-                    fontSize={96}
+                    fontSize={42}
                     fontWeight={900}
                     strokeWidth={
                         4.559
