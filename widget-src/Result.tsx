@@ -99,24 +99,26 @@ export default function Result({resultInfo, index}: { resultInfo: nwi.Daum, inde
             </Text>
         </AutoLayout>
 
-        <Rectangle
-            name="common-word-signal"
-            y={{
-                type: "top-bottom",
-                topOffset: 0,
-                bottomOffset: 0,
-            }}
-            positioning="absolute"
-            fill="#0FA958"
-            cornerRadius={{
-                topLeft: 8,
-                topRight: 0,
-                bottomRight: 0,
-                bottomLeft: 8,
-            }}
-            width={7}
-            height={95}
-        />
+        { resultInfo.is_common &&
+            <Rectangle
+                name="common-word-signal"
+                y={{
+                    type: "top-bottom",
+                    topOffset: 0,
+                    bottomOffset: 0,
+                }}
+                positioning="absolute"
+                fill="#0FA958"
+                cornerRadius={{
+                    topLeft: 8,
+                    topRight: 0,
+                    bottomRight: 0,
+                    bottomLeft: 8,
+                }}
+                width={7}
+                height={95}
+            />
+        }
     </AutoLayout>
 
 }
