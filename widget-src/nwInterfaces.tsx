@@ -45,3 +45,8 @@ export interface Attribution {
   jmnedict: boolean
   dbpedia: any
 }
+
+export interface Sentence {
+  japanese: string
+  english: string
+}
