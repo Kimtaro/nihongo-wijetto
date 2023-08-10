@@ -11,6 +11,7 @@ type SearchBarProps = {
     setMaxPage: (value: number) => void
     maxPage: number
 }
+
 export default function SearchBar({setResults, setNumberOfResults, setPage, setIndexCeiling, setIndexFloor, resultsPerPage, maxPage, setMaxPage}: SearchBarProps) {
     const [text, setText] = useSyncedState("text", "");
     const onTextEnd = async (event: TextEditEvent) => {
