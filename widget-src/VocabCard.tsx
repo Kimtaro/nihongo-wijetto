@@ -1,13 +1,14 @@
 import * as nwi from "./nwInterfaces";
 import * as util from "./Utils"
+import SentenceBox from "./SentenceBox";
 
 const {widget} = figma;
-const {AutoLayout, Text, Frame, Image, SVG, useSyncedState} = widget;
+const {AutoLayout, Text, Frame, useSyncedState} = widget;
 
 type VocabCardProps = {
     nodeInfo: nwi.Daum
 }
-export default function VocabCard({nodeInfo}: VocabCardProps): FigmaDeclarativeNode  {
+export default function VocabCard({nodeInfo}: VocabCardProps): FigmaDeclarativeNode {
     const [sentences, setSentences] = useSyncedState<nwi.Sentence[]>("sentences", [])
     const [showSentences, setShowSentences] = useSyncedState<boolean>("showDefinitions", false)
     const onVocabButtonClick = async () => {
@@ -19,7 +20,7 @@ export default function VocabCard({nodeInfo}: VocabCardProps): FigmaDeclarativeN
             const response = await fetch(url)
             const json = await response.json()
             if (json.sentences.length > 4) {
-                setSentences(json.sentences.slice(0,4))
+                setSentences(json.sentences.slice(0, 4))
             } else {
                 setSentences(json.sentences)
             }
@@ -122,15 +123,15 @@ export default function VocabCard({nodeInfo}: VocabCardProps): FigmaDeclarativeN
             verticalAlignItems="center"
             onClick={onVocabButtonClick}
         >
-        <Text
-            name="Toggle sentences"
-            fill="#FFF"
-            verticalAlignText="center"
-            fontFamily="Inter"
-            fontWeight={300}
-        >
-            {showSentences ? "Show Definitions" : "Show Sentences"}
-        </Text>
+            <Text
+                name="Toggle sentences"
+                fill="#FFF"
+                verticalAlignText="center"
+                fontFamily="Inter"
+                fontWeight={300}
+            >
+                {showSentences ? "Show Definitions" : "Show Sentences"}
+            </Text>
         </AutoLayout>
         <AutoLayout
             name="Details Container"
@@ -182,43 +183,9 @@ export default function VocabCard({nodeInfo}: VocabCardProps): FigmaDeclarativeN
                     </Text>
                 </AutoLayout>
             }
-            {showSentences ? 
-                sentences.map((sent) => {
-                    return <AutoLayout
-                        name="sentence-box"
-                        overflow="visible"
-                        direction="vertical"
-                        width="fill-parent"
-                        verticalAlignItems="center"
-                    >
-                        <Text
-                            name="Sentence"
-                            fill="#699BF7"
-                            width="fill-parent"
-                            verticalAlignText="center"
-                            fontFamily="Inter"
-                            fontSize={8}
-                            fontWeight={300}
-                            strokeWidth={
-                                1.464
-                            }
-                        >
-                            Sentence
-                        </Text>
-                        <Text
-                            fill="#000"
-                            width="fill-parent"
-                            verticalAlignText="center"
-                            fontFamily="Inter"
-                            fontWeight={500}
-                            strokeWidth={
-                                3.039
-                            }
-                        >
-                            {sent['japanese']}
-                            {sent['english']}
-                        </Text>
-                    </AutoLayout>
+            {showSentences ?
+                sentences.map((sent, index) => {
+                    return <SentenceBox sentence={sent} key={index} index={index}/>
                 })
                 :
                 nodeInfo.senses.map((sense) => {
