@@ -37,7 +37,6 @@ export default function SearchBar({setResults, setNumberOfResults, setPage, setI
         name="search-bar"
         fill="#FFF"
         stroke="#D9D9D9"
-        cornerRadius={8}
         overflow="visible"
         spacing="auto"
         padding={16}
