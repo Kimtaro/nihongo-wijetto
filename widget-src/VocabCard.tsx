@@ -40,6 +40,17 @@ export default function VocabCard({nodeInfo}: VocabCardProps): FigmaDeclarativeN
         spacing={primitive.large}
         width={800}
         horizontalAlignItems="center"
+        effect={{
+            type: "drop-shadow",
+            color: primitive.dropShadow,
+            offset: {
+                x: 0,
+                y: 24,
+            },
+            blur: 40,
+            showShadowBehindNode:
+                false,
+        }}
     >
         <AutoLayout
             name="vocabKanji"
