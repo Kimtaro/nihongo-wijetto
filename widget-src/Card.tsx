@@ -1,3 +1,6 @@
+import { theme } from "../ui-src/tokensThemes";
+import { primitive } from "../ui-src/tokensPrimitives";
+
 const {widget} = figma;
 const {AutoLayout, Text} = widget;
 
@@ -10,24 +13,21 @@ export default function Card({children}: CardProps): FigmaDeclarativeNode {
         name="Card"
         effect={{
             type: "drop-shadow",
-            color: "#00000026",
+            color: primitive.dropShadow,
             offset: {
                 x: 0,
-                y: 23.431,
+                y: 24,
             },
-            blur: 46.861,
+            blur: 40,
             showShadowBehindNode:
                 false,
         }}
-        fill="#FFF"
-        cornerRadius={
-            23.43071174621582
-        }
-        strokeWidth={1.464}
+        fill={theme.bgSecondary}
+        cornerRadius={primitive.xlarge}
+        strokeWidth={0}
         direction="vertical"
-        width={550.62}
+        width={800}
     >
-
         {children}
     </AutoLayout>
 

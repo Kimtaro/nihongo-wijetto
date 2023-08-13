@@ -1,3 +1,5 @@
+import { primitive } from "../ui-src/tokensPrimitives";
+import { theme } from '../ui-src/tokensThemes';
 import * as nwi from "./nwInterfaces";
 import VocabCard from "./VocabCard";
 import * as util from "./Utils"
@@ -33,17 +35,17 @@ export default function Result({resultInfo, index}: { resultInfo: nwi.Daum, inde
 const isLongWord = util.word(resultInfo).length > 4
 
 return <AutoLayout
-    name="SearchBar"
-    fill="#F5F5F5"
+    name="searchResult"
+    fill={theme.bgPrimary}
     width="fill-parent"
-    cornerRadius={8}
-    strokeWidth={1.464}
-    overflow="visible"
-    direction={isLongWord ? "vertical" : "horizontal"}
-    spacing={10}
+    cornerRadius={primitive.xxlarge}
+    overflow="hidden"
+    direction="vertical"
+    horizontalAlignItems="start"
+    spacing={primitive.large}
     padding={{
-        vertical: 16,
-        horizontal: 20,
+        vertical: primitive.xxlarge,
+        horizontal: primitive.xxlarge,
     }}
     onClick={async (e) => {
         await onResultClick(e, resultInfo)
@@ -51,113 +53,89 @@ return <AutoLayout
     key={index}
 >
     <AutoLayout
-        name="kanji-box"
+        name="searchResultCard"
         overflow="visible"
         direction="vertical"
-        spacing={4}
+        spacing={primitive.large}
         verticalAlignItems="center"
         horizontalAlignItems="center"
     >
         {util.shouldShowReading(resultInfo) &&
             <Text
-                fill="#F24E1E"
+                name="resultReading"
+                fill={theme.textFocus}
                 width="fill-parent"
                 verticalAlignText="center"
                 horizontalAlignText="left"
-                fontFamily="Zen Kaku Gothic Antique"
-                fontSize={12}
-                fontWeight={
-                    500
-                }
-                strokeWidth={
-                    1.464
-                }
+                fontFamily="Inter"
+                fontSize={primitive.medium}
+                fontWeight={700}
+                lineHeight={primitive.medium}
             >
                 {util.reading(resultInfo)}
             </Text>
         }
         <Text
-            fill="#000"
+            name="resultKanji"
+            fill={theme.textPrimary}
             width="fill-parent"
             verticalAlignText="center"
             horizontalAlignText="left"
-            fontFamily="Roboto"
-            fontSize={32}
-            strokeWidth={
-                3.039
-            }
+            fontFamily="Inter"
+            fontSize={primitive.xlarge}
+            fontWeight={900}
+            lineHeight={primitive.xlarge}
         >
             {util.word(resultInfo)}
         </Text>
     </AutoLayout>
-
     <AutoLayout
-        name="definition-box"
+        name="resultDefinition"
         overflow="visible"
-        direction="horizontal"
+        direction="vertical"
         width="fill-parent"
         verticalAlignItems="center"
-        spacing={10}
+        spacing={primitive.small}
     >
-        {isLongWord &&
-            <AutoLayout
-                name="fake-kanji-box"
-                width={130}
-                height={10}
-            >
-            </AutoLayout>
-        }
-        <AutoLayout
-            name="definition-box"
-            overflow="visible"
-            direction="vertical"
-            width="fill-parent"
-            verticalAlignItems="center"
-        >
             <Text
-                fill="#909090"
+                name="resultLabel"
+                fill={theme.textSecondary}
                 verticalAlignText="center"
                 horizontalAlignText="center"
                 fontFamily="Inter"
-                fontSize={8}
-                strokeWidth={
-                    1.464
-                }
+                fontSize={primitive.medium}
+                fontWeight={400}
+                lineHeight={primitive.medium}
             >
                 {resultInfo.senses[0].parts_of_speech.join('; ')}
             </Text>
             <Text
-                fill="#0006"
+                name="resultDefinitionText"
+                fill={theme.textPrimary}
                 width="fill-parent"
-                verticalAlignText="center"
+                verticalAlignText="top"
                 fontFamily="Inter"
-                fontSize={24}
-                fontWeight={500}
-                strokeWidth={3.039}
+                fontSize={primitive.large}
+                fontWeight={400}
+                lineHeight={primitive.large}
             >
                 {resultInfo.senses[0].english_definitions.join('; ')}
             </Text>
-        </AutoLayout>
     </AutoLayout>
 
     {resultInfo.is_common &&
         <Rectangle
-            name="common-word-signal"
+            name="commonWordLabel"
             y={{
                 type: "top-bottom",
-                topOffset: 0,
-                bottomOffset: 0,
+                topOffset: primitive.xxlarge,
+                bottomOffset: primitive.xxlarge,
             }}
+            x={primitive.large}
             positioning="absolute"
-            fill="#0FA958"
-            cornerRadius={{
-                topLeft: 8,
-                topRight: 0,
-                bottomRight: 0,
-                bottomLeft: 8,
-            }}
-            width={7}
-            height={95}
+            fill={theme.textSignal}
+            cornerRadius={primitive.xxlarge}
+            width={primitive.small}
         />
     }
 </AutoLayout>

@@ -1,4 +1,6 @@
 import * as nwi from "./nwInterfaces";
+import { primitive } from "../ui-src/tokensPrimitives";
+import { theme } from '../ui-src/tokensThemes';
 import Result from "./Result";
 import PaginationBar from "./PaginationBar";
 
@@ -23,21 +25,23 @@ export default function ResultsList({maxPage,results, page, numberOfResults, res
 
 
     return <AutoLayout
-        name="ScrollingResult"
+        name="searchResultsList"
         direction="vertical"
-        padding={{
-            vertical: 24,
-            horizontal: 24,
-        }}
         width="fill-parent"
+        minHeight={200}
         horizontalAlignItems="center"
     >
+                {results.length > 0 ?
+            <PaginationBar maxPage={maxPage} page={page} setPage={setPage} numberOfResults={numberOfResults} resultsPerPage={resultsPerPage}
+                           indexFloor={indexFloor} setIndexFloor={setIndexFloor} indexCeiling={indexCeiling}
+                           setIndexCeiling={setIndexCeiling}/> : <></>}
         <AutoLayout
-            name="Frame 4"
+            name="searchResultRow"
             overflow="scroll"
             direction="vertical"
             width="fill-parent"
-            spacing={16}
+            padding={primitive.xlarge}
+            spacing={primitive.xlarge}
         >
             {results.map((result, index) => {
                 const iFloor = indexFloor === 0 ? 0 : indexFloor - 1
@@ -45,9 +49,5 @@ export default function ResultsList({maxPage,results, page, numberOfResults, res
                 return index >= iFloor && index <= iCeiling ? <Result resultInfo={result} index={index}/> : null
             })}
         </AutoLayout>
-        {results.length > 0 ?
-            <PaginationBar maxPage={maxPage} page={page} setPage={setPage} numberOfResults={numberOfResults} resultsPerPage={resultsPerPage}
-                           indexFloor={indexFloor} setIndexFloor={setIndexFloor} indexCeiling={indexCeiling}
-                           setIndexCeiling={setIndexCeiling}/> : <></>}
     </AutoLayout>
 }

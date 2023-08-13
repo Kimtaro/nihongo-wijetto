@@ -1,6 +1,8 @@
 import * as nwi from "./nwInterfaces";
 import * as util from "./Utils"
 import SentenceBox from "./SentenceBox";
+import { primitive } from "../ui-src/tokensPrimitives";
+import { theme } from '../ui-src/tokensThemes';
 
 const {widget} = figma;
 const {AutoLayout, Text, Frame, useSyncedState} = widget;
@@ -32,152 +34,102 @@ export default function VocabCard({nodeInfo}: VocabCardProps): FigmaDeclarativeN
 
     return <AutoLayout
         name="VocabularyCard"
-        effect={{
-            type: "drop-shadow",
-            color: "#0000001A",
-            offset: {
-                x: 0,
-                y: 4,
-            },
-            blur: 24,
-            showShadowBehindNode:
-                false,
-        }}
-        fill="#FFF"
-        cornerRadius={16}
-        overflow="visible"
+        fill={theme.bgPrimary}
+        cornerRadius={primitive.xlarge}
         direction="vertical"
-        spacing={10}
-        width={387}
+        spacing={primitive.large}
+        width={800}
         horizontalAlignItems="center"
     >
         <AutoLayout
-            name="Kanji-box"
-            effect={{
-                type: "inner-shadow",
-                color: "#0000001A",
-                offset: {
-                    x: 0,
-                    y: 0,
-                },
-                blur: 24,
-                visible: false
-            }}
-            fill="#FFF"
+            name="vocabKanji"
+            fill={theme.bgSecondary}
             direction="vertical"
             padding={{
-                top: 10,
-                right: 0,
-                bottom: 0,
-                left: 0,
+                vertical: primitive.xlarge,
+                horizontal: primitive.small,
             }}
             width="fill-parent"
-            height={105}
+            height="hug-contents"
+            minHeight={200}
             horizontalAlignItems="center"
-            cornerRadius={{
-                topLeft: 16,
-                topRight: 16,
-                bottomRight: 0,
-                bottomLeft: 0,
-            }}
-        >
-            <AutoLayout
-                name="kanji-box"
-                strokeWidth={1.5}
-                overflow="visible"
-                direction="vertical"
-                width="fill-parent"
-                height="fill-parent"
-                verticalAlignItems="center"
-                horizontalAlignItems="center"
-            >
+            verticalAlignItems="center">
                 <Text
-                    name="魚"
-                    opacity={0.8}
-                    fill="#000"
+                    name="kanji"
+                    fill={theme.textPrimary}
                     width="fill-parent"
                     verticalAlignText="center"
                     horizontalAlignText="center"
-                    lineHeight="100%"
-                    fontFamily="Noto Serif Tamil"
-                    fontSize={42}
-                    fontWeight={900}
-                    strokeWidth={
-                        4.559
-                    }
+                    lineHeight={primitive.large}
+                    fontFamily="Inter"
+                    fontSize={primitive.xlarge}
+                    fontWeight={700}
                 >
                     {util.word(nodeInfo)}
                 </Text>
             </AutoLayout>
-        </AutoLayout>
         <AutoLayout
-            name="Find Sentences Container"
-            fill="#5551FF"
-            cornerRadius={50}
-            overflow="visible"
-            spacing={8}
+            name="vocabButton"
+            fill={theme.bgAccent}
+            cornerRadius={primitive.xxlarge}
+            overflow="hidden"
             padding={{
-                vertical: 8,
-                horizontal: 16,
+                vertical: primitive.large,
+                horizontal: primitive.xxlarge,
             }}
             verticalAlignItems="center"
             onClick={onVocabButtonClick}
         >
             <Text
-                name="Toggle sentences"
-                fill="#FFF"
+                name="button"
+                fill={theme.textAccent}
                 verticalAlignText="center"
+                horizontalAlignText="center"
                 fontFamily="Inter"
-                fontWeight={300}
+                fontSize={primitive.large}
+                fontWeight={400}
+                lineHeight={primitive.large}
             >
                 {showSentences ? "Show Definitions" : "Show Sentences"}
             </Text>
         </AutoLayout>
         <AutoLayout
-            name="Details Container"
-            overflow="visible"
+            name="vocabDefinition"
+            overflow="hidden"
             direction="vertical"
-            spacing={16}
-            padding={{
-                top: 8,
-                right: 32,
-                bottom: 32,
-                left: 32,
-            }}
+            spacing={primitive.large}
+            padding={primitive.xxlarge}
             width="fill-parent"
         >
             {util.shouldShowReading(nodeInfo) && !showSentences &&
                 <AutoLayout
                     name="details-box"
-                    overflow="visible"
+                    overflow="hidden"
                     direction="vertical"
                     width="fill-parent"
                     verticalAlignItems="center"
                 >
                     <Text
-                        name="Reading"
-                        fill="#699BF7"
+                        name="vocabReadingLabel"
+                        fill={theme.textSecondary}
                         width="fill-parent"
                         verticalAlignText="center"
                         fontFamily="Inter"
-                        fontSize={8}
-                        fontWeight={300}
-                        strokeWidth={
-                            1.464
-                        }
+                        fontSize={primitive.medium}
+                        fontWeight={700}
+                        line-height={primitive.large}
                     >
                         Reading
                     </Text>
                     <Text
-                        name="さかな"
-                        fill="#F24E1E"
+                        name="vocabReading"
+                        fill={theme.textFocus}
                         width="fill-parent"
                         verticalAlignText="center"
                         fontFamily="Inter"
-                        fontWeight={700}
-                        strokeWidth={
-                            3.039
-                        }
+                        fontSize={primitive.large}
+                        fontWeight={400}
+                        lineHeight={primitive.large}
                     >
                         {util.reading(nodeInfo)}
                     </Text>
@@ -191,34 +143,32 @@ export default function VocabCard({nodeInfo}: VocabCardProps): FigmaDeclarativeN
                 nodeInfo.senses.map((sense) => {
                     return <AutoLayout
                         name="definition-box"
-                        overflow="visible"
+                        overflow="hidden"
                         direction="vertical"
                         width="fill-parent"
                         verticalAlignItems="center"
                     >
                         <Text
-                            name="Godan verb with ru ending, Transitive verb"
-                            fill="#699BF7"
+                            name="definitionLabel"
+                            fill={theme.textSecondary}
                             width="fill-parent"
                             verticalAlignText="center"
                             fontFamily="Inter"
-                            fontSize={8}
-                            fontWeight={300}
-                            strokeWidth={
-                                1.464
-                            }
+                            fontSize={primitive.medium}
+                            fontWeight={700}
+                            lineHeight={primitive.large}
                         >
                             {sense.parts_of_speech.join('; ')}
                         </Text>
                         <Text
-                            fill="#000"
+                            name="definitionText"
+                            fill={theme.textPrimary}
                             width="fill-parent"
                             verticalAlignText="center"
                             fontFamily="Inter"
-                            fontWeight={500}
-                            strokeWidth={
-                                3.039
-                            }
+                            fontSize={primitive.large}
+                            fontWeight={400}
+                            lineHeight={primitive.large}
                         >
                             {sense.english_definitions.join('; ')}
                         </Text>
@@ -226,37 +176,33 @@ export default function VocabCard({nodeInfo}: VocabCardProps): FigmaDeclarativeN
                 })
             }
         </AutoLayout>
-        <Frame
-            name="Frame 11"
-            fill="#5551FF"
-            overflow="visible"
-            width='fill-parent'
-            height={42}
-            cornerRadius={{
-                topLeft: 0,
-                topRight: 0,
-                bottomRight: 16,
-                bottomLeft: 16,
+        <AutoLayout
+            name="vocabLevel"
+            fill={theme.bgAccent}
+            overflow="hidden"
+            width="fill-parent"
+            height="hug-contents"
+            padding={{
+                vertical: primitive.large,
+                horizontal: primitive.xlarge,
             }}
+            verticalAlignItems='center'
+            horizontalAlignItems='center'
         >
             <Text
-                name="JLPT N5 // WaniKani Lvl 7"
-                x={{
-                    type: "left-right",
-                    leftOffset: 0.5,
-                    rightOffset: -0.5,
-                }}
-                fill="#FFF"
+                name="vocabLevelText"
+                fill={theme.textAccent}
                 width="fill-parent"
-                height={42}
+                height={primitive.large}
                 verticalAlignText="center"
                 horizontalAlignText="center"
                 fontFamily="Inter"
-                fontWeight={500}
-                fontSize={24}
+                fontSize={primitive.large}
+                fontWeight={400}
+                lineHeight={primitive.large}
             >
                 {nodeInfo.jlpt.join('; ').toUpperCase()}
             </Text>
-        </Frame>
+        </AutoLayout>
     </AutoLayout>
 }
