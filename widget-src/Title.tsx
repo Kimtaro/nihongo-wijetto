@@ -19,12 +19,6 @@ export default function Title() {
         horizontalAlignItems="center"
         verticalAlignItems="center"
       > 
-        <SVG
-                    name="Left Chevron"
-                    height={primitive.large}
-                    width={primitive.large}
-                    src='<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 40 40" fill="none"><path d="M20.0001 6.66663L6.66675 20L20.0001 33.3333" stroke="white" stroke-width="6.66666" stroke-linecap="round" stroke-linejoin="round"/></svg>'
-          />    
         <Text
           name="Title"
           fill={theme.bgPrimary}
@@ -37,13 +31,5 @@ export default function Title() {
         >
           日本語 ウィジェット
         </Text>
-        <SVG
-                    name="Right Chevron"
-                    height={primitive.large}
-                    width={primitive.large}
-                    src='<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 40 40" fill="none">
-                    <path d="M19.9999 6.66669L33.3333 20L19.9999 33.3334" stroke="white" stroke-width="6.66666" stroke-linecap="round" stroke-linejoin="round"/>
-                  </svg>'
-          />   
       </AutoLayout>
 }
