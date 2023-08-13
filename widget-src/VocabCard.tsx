@@ -95,7 +95,7 @@ export default function VocabCard({nodeInfo}: VocabCardProps): FigmaDeclarativeN
         </AutoLayout>
         <AutoLayout
             name="vocabDefinition"
-            overflow="hidden"
+            overflow="visible"
             direction="vertical"
             spacing={primitive.large}
             padding={primitive.xxlarge}
@@ -104,7 +104,7 @@ export default function VocabCard({nodeInfo}: VocabCardProps): FigmaDeclarativeN
             {util.shouldShowReading(nodeInfo) && !showSentences &&
                 <AutoLayout
                     name="details-box"
-                    overflow="hidden"
+                    overflow="visible"
                     direction="vertical"
                     width="fill-parent"
                     verticalAlignItems="center"
@@ -143,7 +143,7 @@ export default function VocabCard({nodeInfo}: VocabCardProps): FigmaDeclarativeN
                 nodeInfo.senses.map((sense) => {
                     return <AutoLayout
                         name="definition-box"
-                        overflow="hidden"
+                        overflow="visible"
                         direction="vertical"
                         width="fill-parent"
                         verticalAlignItems="center"
