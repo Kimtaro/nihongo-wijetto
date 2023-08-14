@@ -1,4 +1,6 @@
 import * as nwi from './nwInterfaces'
+import { primitive } from "../ui-src/tokensPrimitives";
+import { theme } from '../ui-src/tokensThemes';
 
 const {widget} = figma;
 const {AutoLayout, Text, useSyncedState} = widget;
@@ -14,55 +16,47 @@ export default function SentenceBox({sentence, index}: SentenceBoxProps): FigmaD
     }
 
     return <AutoLayout
-        name="sentence-box"
+        name="vocabSentences"
         overflow="visible"
         direction="vertical"
         width="fill-parent"
-        verticalAlignItems="center"
+        verticalAlignItems="start"
     >
-        <Text
-            name="Sentence"
-            fill="#699BF7"
+        <AutoLayout
+            name="vocabSentenceGroup"
+            overflow="visible"
+            direction="vertical"
             width="fill-parent"
-            verticalAlignText="center"
-            fontFamily="Inter"
-            fontSize={8}
-            fontWeight={300}
-            strokeWidth={
-                1.464
-            }
+            spacing={primitive.medium}
         >
-            Sentence
-        </Text>
-        <Text
-            fill="#000"
-            width="fill-parent"
-            verticalAlignText="center"
-            fontFamily="Inter"
-            fontWeight={500}
-            strokeWidth={
-                3.039
-            }
-        >
-            {sentence['japanese']}
-        </Text>
-        <Text
-            fill="#000"
-            width="fill-parent"
-            verticalAlignText="center"
-            fontFamily="Inter"
-            fontWeight={500}
-            strokeWidth={
-                3.039
-            }
-            onClick={onEnglishClick}
-            effect={{
-                blur: isBlurred ? 10 : 0,
-                type: "layer-blur"
-            }}
+            <Text
+                name="vocabSentenceText"
+                fill={theme.textPrimary}
+                width="fill-parent"
+                fontFamily="Inter"
+                fontSize={primitive.large}
+                fontWeight={400}
+                lineHeight={primitive.large}
+            >
+                {sentence['japanese']}
+            </Text>
+            <Text
+                name="vocabSentenceTranslation"
+                fill={theme.textSecondary}
+                width="fill-parent"
+                fontFamily="Inter"
+                fontSize={primitive.large}
+                fontWeight={400}
+                lineHeight={primitive.large}
+                onClick={onEnglishClick}
+                effect={{
+                    blur: isBlurred ? primitive.small : 0,
+                    type: "layer-blur"
+                }}
 
-        >
-            {sentence['english']}
-        </Text>
+            >
+                {sentence['english']}
+            </Text>
+        </AutoLayout>
     </AutoLayout>
 }

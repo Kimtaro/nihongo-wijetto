@@ -1,27 +1,33 @@
+import { primitive } from "../ui-src/tokensPrimitives";
+import { theme } from '../ui-src/tokensThemes';
+
+
 const {widget} = figma;
-const {AutoLayout, Text} = widget;
+const {AutoLayout, Ellipse, Frame, SVG, Text, Input, useSyncedState} = widget;
+
 export default function Title() {
     return <AutoLayout
         name="Title"
-        fill="#5551FF"
-        strokeWidth={1.464}
-        spacing={14.644}
-        padding={14.644}
+        fill={theme.bgAccent}
+        spacing="auto"
+        padding={{
+          vertical: primitive.xlarge,
+          horizontal: primitive.xlarge,
+        }}
         width="fill-parent"
+        minHeight={200}
         horizontalAlignItems="center"
         verticalAlignItems="center"
-      >
+      > 
         <Text
-          name="日本語ウィジェット"
-          fill="#FFF"
+          name="Title"
+          fill={theme.bgPrimary}
           verticalAlignText="center"
           horizontalAlignText="center"
-          fontFamily="Roboto"
-          fontSize={
-            35.14606857299805
-          }
+          fontFamily="Inter"
+          fontSize={primitive.xlarge}
           fontWeight={700}
-          strokeWidth={1.464}
+          lineHeight={primitive.large}
         >
           日本語 ウィジェット
         </Text>
